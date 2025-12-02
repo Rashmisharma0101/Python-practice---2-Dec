@@ -1,0 +1,54 @@
+Question 1 — Identify Top Customers by Spend
+You are given a DataFrame df with the following columns:
+customer_id
+order_id
+order_amount
+order_date (string)
+
+Task:
+Convert order_date to a proper datetime type.
+Find the top 5 customers by total spend.
+Return a DataFrame with columns:
+customer_id, total_spend, order_count
+
+Solution
+import datetime
+df['order_date'] = pd.to_datetime(df['order_date'])
+df1 = df.groupby('customer_id).agg(total_spend = ('order_amount', 'sum'), order_count = ('order_id', 'count')).sort_values(by = total_spend, ascending = False).reset_index().head(5)
+
+Question 2
+Impute Missing Values & Detect Outliers
+
+You have a DataFrame sales:
+product_id
+units_sold
+price
+category
+
+There are missing values in units_sold and price.
+
+Task:
+Impute missing values:
+Replace missing price with median price of that product’s category.
+Replace missing units_sold with 0.
+Identify outliers in price using the IQR method and return only those rows.
+
+df['units_sold'] = df['units_sold'].fillna(0)
+df['price'] = df['price'].fillna(df['price'].median())
+
+or
+Fill missing price with median price per category
+df['price'] = df.groupby('category')['price'].transform(
+    lambda x: x.fillna(x.median())
+)
+
+Q1 = np.percentile(df['price'], 25)
+Q3 = np.percentile(df['price']75)
+IQR  = Q2 - Q1
+lower = Q1 - (1.5* Q1)
+upper = Q3 + (1.5 * Q3)
+
+outliers = df[(df['price'] <= lower) | (df['price'] >= upper)]
+
+
+
