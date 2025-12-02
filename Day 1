@@ -1,0 +1,46 @@
+# Problem:
+Write a function most_frequent_word(text) that:
+Takes a string of text
+Counts how many times each word appears
+Returns the most frequent word and its frequency
+
+Example
+text = "apple banana apple mango mango mango banana"
+Output → ("mango", 3)
+
+# Solution:
+text = "apple banana apple mango mango mango banana"
+l = text.lower().split(" ")
+l1 = {}
+for i in l: 
+  l1[i] = l.count(i)
+most_word = max(l1, key = l1.get)
+most_count = l1[most_word]
+print(most_count, most_word)
+
+alternate code
+
+from collections import Counter
+text = "apple banana apple mango mango mango banana"
+counts = Counter(text.lower().split())
+most_word, most_count = counts.most_common(1)[0]
+print(most_word, most_count)
+
+
+# problem 2
+Filter Even Numbers & Compute Their Square
+Task
+Write a function square_evens(nums) that:
+Takes a list of integers
+Keeps only the even numbers
+Returns a new list where each even number is squared
+
+def square_evens(nums):
+  num1 = []
+  for i in nums:
+    if i % 2 == 0:
+       num1.append(i*i)
+  return num1    
+
+result  = square_evens([1,2,3,4,5,6])
+print(result)
