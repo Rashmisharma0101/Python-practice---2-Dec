@@ -1,4 +1,4 @@
-# Problem:
+# Problem 1
 Write a function most_frequent_word(text) that:
 Takes a string of text
 Counts how many times each word appears
@@ -35,6 +35,7 @@ Takes a list of integers
 Keeps only the even numbers
 Returns a new list where each even number is squared
 
+Solution
 def square_evens(nums):
   num1 = []
   for i in nums:
@@ -44,3 +45,49 @@ def square_evens(nums):
 
 result  = square_evens([1,2,3,4,5,6])
 print(result)
+
+# Problem 3:
+Reverse a String (without using slicing)
+
+string = "Hello"
+newl = []
+for i in range(len(string), 0, -1):
+  newl.append(string[i])
+
+revstr = "".join(newl)
+print(revstr)
+
+# problem 4
+Write a function divisible(nums) that returns a list of all numbers that are divisible by 3 or 5.
+
+def divisible(nums):
+  l = []
+  for i in nums:
+    if i % 3 == 0 or i % 5 == 0:
+      l.append(i)
+  return l
+
+result = divisible([1,2,3,4,5,6,7,8,9,10])
+print(result)
+
+# problem 5
+Write a function is_sorted(lst) that checks if the list is sorted in ascending order.
+
+def is_sorted(lst):
+    for i in range(len(lst) - 1):
+        if lst[i] > lst[i + 1]:
+            return False
+    return True
+
+# problem 6
+Given a list of words, return a dictionary with each word and its length.
+
+lst = ["cat", "elephant", "dog"]
+d = {}
+for i in lst:
+  d[i] = len(i)
+print(d)
+          
+      
+
+
