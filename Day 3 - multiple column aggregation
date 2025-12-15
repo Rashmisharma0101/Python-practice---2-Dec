@@ -1,0 +1,43 @@
+Question 1: Customer Purchase Behavior (pandas + datetime)
+Data
+You are given a DataFrame df_orders with the following columns:
+column	description
+order_id	unique order id
+customer_id	customer identifier
+order_date	date of order (string format: YYYY-MM-DD)
+order_amount	order value
+  
+Task
+Write Python code to compute one row per customer with:
+First purchase date
+Most recent purchase date
+Number of days between first and last purchase
+Total lifetime spend
+Average order value
+
+SOLUTION
+import pandas as pd 
+df_orders['order_date']= pd.to_datetime(df_orders['order_date'])
+values_df = (df_orders.groupby('customer_id').agg(first_date = ('order_date', 'min'),
+                                                 recent_date = ('order_date', 'max'),
+                                                 lifetime_spend = ('order_amount', 'sum'),
+                                                 average_order_value = ('order_amount', 'mean')).reset_index())
+
+final_df['days_between_f_1'] = (final_df['recent_date'] - final_df['first_date']).dt.days
+                                                
+
+Question 2: Sales Performance & Ranking (pandas + window logic)
+Data
+You are given a DataFrame df_sales:
+column	description
+employee_id	sales employee
+region	sales region
+sale_date	date
+sales_amount	amount
+For each region, return the employee(s) with the highest total sales.
+
+ 
+SOLUTION
+sales_agg = df_sales.groupby(['region', 'employee_id'], as_index = False).agg(total_sales = ('sales_amount', 'sum'))
+sales_agg['rank'] = sales_agg.groupby('region')['total_sales'].rank(method = 'Dense', ascending = False)
+top_employees = sales_agg[sales_agg['rank'] ==1]
