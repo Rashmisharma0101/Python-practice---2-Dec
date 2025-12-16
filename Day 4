@@ -1,0 +1,13 @@
+1. Find which category contributes more than 40% of total revenue.
+
+df  = df_orders.groupby('category', as_index = False).agg(total_revenue = ('order_amount', 'sum'))
+df['revenue_percentage'] = (df['total_revenue'] / df['order_amount'].sum()) * 100
+df_filtered = df[df['revenue_percentage'] > 40][['category', 'total_revenue', 'revenue_percentage']]
+
+2. df['login_date'] = pd.to_datetime(df['login_date'])
+df = df.sort_values(['user_id', 'login_date'])
+result = df.groupby('user_id').rolling('7D', on = 'login_date').size().reset_index(name = 'last_7_day_logins'))
+
+result = result[['user_id', 'login_date', 'last_7_day_logins']]
+
+
