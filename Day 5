@@ -1,0 +1,29 @@
+revenue_per_category = (df_orders.groupby('category').agg(total_revenue = ('order_amount', 'sum'),
+unique_customers = ('customer_id', 'nunique'),
+average_ordervalue = ('order_amount', 'mean')))
+
+revenue_per_category.sort_values(by = ['total_revenue', 'unique_customers'], ascending = [False, True])
+
+Problem 2
+Tasks
+Perform EDA to find:
+1️⃣ Monthly revenue trend per region
+2️⃣ Month-over-month revenue growth per region
+3️⃣ Which region shows the most volatile revenue?
+
+df_sales['sale_date'] = pd.to_datetime(df_sales['sale_date'])
+df_sales['month'] = df_sales['sale_date'].dt.month
+df_grouped = df_sales.groupby(['region', 'month'])['revenue'].sum().reset_index(name = 'month_region_revenue')
+df_grouped = df_grouped.sort_values(['region', 'month'])
+df_grouped['mom_growth_percentage'] = (df_grouped.groupby('region')['month_region_revenue'].pct_change()*100) 
+
+volatility = (
+    df_grouped
+    .groupby('region')['month_region_revenue']
+    .std()
+    .reset_index(name='revenue_std')
+    .sort_values('revenue_std', ascending=False)
+)
+# Highest revenue_std = most volatile region
+
+
